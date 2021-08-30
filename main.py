@@ -14,7 +14,7 @@ print('Bienvenue dans ED-Class-Fetcher =) ! Script Développé par Clément Boit
 username = str(input("Veuillez entrer votre nom d'utilisateur École Directe: "))
 password = str(input("Veuillez entrer votre mot de passe École Directe: "))
 
-#Requête HTTPS
+#HTTPS Request
 
 conn = http.client.HTTPSConnection("api.ecoledirecte.com")
 
@@ -38,11 +38,15 @@ conn.request("POST", "/v3/login.awp", payload, headers)
 res = conn.getresponse()
 data = res.read()
 
+
 #Récupération du code de la classe de l'utilisateur
 
 try:
     classe = json.loads(data.decode("utf-8"))['data']['accounts'][0]['profile']['classe']['code']
     print("Le code de votre classe est... ", classe,", vous êtes donc dans la même classe que tous les élèves possédant le même code.\nMerci d'avoir utilisé ED-Class-Fetcher:)")
 except:
-    print("L'authentification a échoué...\nVeuillez vérifier que vos identifiants sont corrects. \nSi le problème persiste vérifiez qu'École Directe soit en mode année (affichage de tous les module utilisés durant l'année)\nMerci d'avoir utilisé ED-Class-Fetcher:)")
-
+    error = json.loads(data.decode("utf-8"))['code']
+    if error == 505:
+        print("Votre mot de passe ou votre nom d'utilisateur sont invalides! Veuillez réessayer:)")
+    else:
+        print("Votre session École Directe n'a pas encore été activée par l'établissement. Veuillez réessayer dans quelques temps:)")
