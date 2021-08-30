@@ -1,4 +1,4 @@
-# ED-Link-Fetcher
+# ED-Classe-Fetcher
 
 Ce script python permet de récupérer votre classe en avance sur les serveurs d'École Directe.
 
