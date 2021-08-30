@@ -1,0 +1,4 @@
+#pyinstaller generated files
+__pycache__
+build
+dist
